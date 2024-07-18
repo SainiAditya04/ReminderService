@@ -1,4 +1,7 @@
 const sender = require('../config/emailConfig');
+const TicketRepository = require('../repository/ticket.repository');
+
+const repo = new TicketRepository();
 
 const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailBody) => {
     try {
@@ -14,6 +17,29 @@ const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailBody) => {
     }
 }
 
+// fetchPendingEmails function will 
+// fetch all the emails which are pending before this timestamp
+const fetchPendingEmails = async (timestamp) => {
+    try {
+        const response = await repo.get({ status: "PENDING" });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const createNotification = async (data) => {
+    try {
+        const response = await repo.create(data);
+        return response;
+    } catch (error) {
+        console.log("error in service layer");
+        throw error;
+    }
+}
+
 module.exports = {
     sendBasicEmail,
+    fetchPendingEmails,
+    createNotification,
 }
