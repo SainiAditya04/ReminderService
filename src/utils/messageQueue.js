@@ -21,7 +21,7 @@ const subscribeMessage = async (channel, service, binding_key) => {
         const applicationQueue = await channel.assertQueue('REMINDER_QUEUE');
         channel.bindQueue(applicationQueue.queue, EXCHANGE_NAME, binding_key);
         channel.consume(applicationQueue.queue, msg => {
-            console.log('received data');
+            console.log('RECEIVED DATA HERE');
             console.log(msg.content.toString());
             service.testingQueue(msg.content.toString());
             channel.ack(msg);
