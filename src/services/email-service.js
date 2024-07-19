@@ -48,9 +48,14 @@ const updateTicket = async (ticketId, data) => {
     }
 }
 
+const testingQueue = async (data) => {
+    console.log("inside service email layer", data);
+}
+
 module.exports = {
     sendBasicEmail,
     fetchPendingEmails,
     createNotification,
     updateTicket,
+    testingQueue
 }
