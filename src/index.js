@@ -14,7 +14,7 @@ const startServer = async () => {
     app.use(express.json());
 
     const channel = await createChannel();
-    subscribeMessage(channel, EmailService, REMINDER_BINDING_KEY);
+    subscribeMessage(channel, EmailService.subscribeEvents, REMINDER_BINDING_KEY);
 
     app.post('/api/v1/tickets', TicketController.create);
 

@@ -48,8 +48,26 @@ const updateTicket = async (ticketId, data) => {
     }
 }
 
-const testingQueue = async (data) => {
-    console.log("inside service email layer", data);
+const subscribeEvents = async (payload) => {
+    try {
+        let service = payload.service;
+        let data = payload.data;
+
+        switch(service){
+            case 'CREATE_TICKET':
+                await createNotification(data);
+                break;
+            case 'SEND_BASIC_MAIL':
+                await sendBasicEmail(data);
+                break;
+            default:
+                console.log("No valid event received");
+                break;
+        }
+    } catch (error) {
+        console.log("error in service layer");
+        throw error;
+    }
 }
 
 module.exports = {
@@ -57,5 +75,5 @@ module.exports = {
     fetchPendingEmails,
     createNotification,
     updateTicket,
-    testingQueue
+    subscribeEvents,
 }
